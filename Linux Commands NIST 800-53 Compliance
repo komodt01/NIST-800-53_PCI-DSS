@@ -1,0 +1,37 @@
+Linux Commands for NIST 800-53 Compliance
+
+NIST Categories:
+  Access Control (AC)
+  System & Communications Protection (SC)
+  Audit & Accountability (AU)
+  Risk Assessment (RA)
+  
+Access Control (AC)
+# Enforce password complexity
+sudo apt install libpam-cracklib -y
+sudo sed -i 's/pam_unix.so/pam_unix.so minlen=12 retry=3/' /etc/pam.d/common-password
+
+# Create a least-privileged user
+sudo adduser secureuser
+sudo usermod -aG sudo secureuser
+
+# Restrict SSH access to specific users
+echo "AllowUsers secureuser" | sudo tee -a /etc/ssh/sshd_config
+sudo systemctl restart sshd
+
+System & Communications Protection (SC)
+# Encrypt disk using LUKS
+sudo cryptsetup luksFormat /dev/sdb
+sudo cryptsetup open /dev/sdb secure_volume
+
+# Enable SELinux or AppArmor (Ubuntu uses AppArmor by default)
+sudo apt install apparmor -y
+sudo aa-status
+
+Audit & Accountability (AU)
+# Enable auditd and monitor key files
+sudo apt install auditd -y
+sudo auditctl -w /etc/passwd -p wa -k passwd_changes
+sudo auditctl -w /var/log/auth.log -p wa -k auth_logs
+sudo service auditd restart
+

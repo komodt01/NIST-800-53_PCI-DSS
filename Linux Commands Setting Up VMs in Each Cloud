@@ -1,0 +1,45 @@
+1. Launch an Amazon Linux 2 instance
+aws ec2 run-instances --image-id ami-0c55b159cbfafe1f0 \
+    --count 1 --instance-type t2.micro \
+    --key-name your-key --security-groups default
+
+2. Connect to the VM
+ssh -i your-key.pem ec2-user@your-instance-ip
+
+3. Enable Firewall & Security
+sudo yum update -y
+sudo yum install firewalld -y
+sudo systemctl start firewalld
+sudo firewall-cmd --permanent --add-service=ssh
+sudo firewall-cmd --reload
+
+Azure: Set Up a Linux VM
+1. Login to Azure and Create a VM
+az login
+az vm create --resource-group MyResourceGroup \
+    --name MyLinuxVM --image UbuntuLTS \
+    --admin-username azureuser --generate-ssh-keys
+
+2. Connect to the VM
+ssh azureuser@your-vm-ip
+
+3. Secure the VM
+sudo apt update && sudo apt upgrade -y
+sudo ufw enable
+sudo ufw allow ssh
+
+GCP: Set Up a Linux VM
+1. Login to GCP and Create a VM
+gcloud auth login
+gcloud compute instances create my-linux-vm \
+    --machine-type=e2-micro --image-family=debian-10 \
+    --image-project=debian-cloud --zone=us-central1-a
+
+2. Connect to the VM
+gcloud compute ssh my-linux-vm --zone=us-central1-a
+
+3. Secure the VM
+sudo apt update && sudo apt upgrade -y
+sudo ufw enable
+sudo ufw allow ssh
+

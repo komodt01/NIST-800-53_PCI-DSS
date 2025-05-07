@@ -1,0 +1,30 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.0"
+    }
+  }
+}
+
+provider "aws" {
+  region = "us-east-1"
+}
+
+resource "aws_instance" "linux_vm" {
+  ami           = "ami-0c55b159cbfafe1f0" # Amazon Linux 2 AMI
+  instance_type = "t2.micro"
+  key_name      = "your-key"
+
+  user_data = <<-EOF
+    #!/bin/bash
+    yum update -y
+    yum install -y wazuh-agent openvas
+    systemctl enable wazuh-agent
+    systemctl start wazuh-agent
+  EOF
+
+  tags = {
+    Name = "AWS-Linux-VM"
+  }
+}

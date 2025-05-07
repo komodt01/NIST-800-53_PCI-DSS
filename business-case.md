@@ -1,0 +1,3 @@
+# Business Case: PCI-DSS Cloud Compliance Lab
+
+A payment processing company migrating to the cloud must ensure its architecture aligns with PCI-DSS requirements to securely handle cardholder data. This project simulates a PCI-compliant environment using AWS, Azure, and GCP, implementing hardened Linux servers, intrusion detection (Wazuh/OSSEC), automated vulnerability scanning (OpenVAS), and centralized SIEM logging. IAM policies, network segmentation, encryption, and API access controls are enforced via Terraform and continuously monitored for compliance drift. The solution enables the business to protect payment data, demonstrate audit readiness, and meet PCI-DSS controls such as 1.1, 6.1, 10.2, and 12.10.
