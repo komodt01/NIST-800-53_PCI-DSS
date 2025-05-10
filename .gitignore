@@ -1,0 +1,36 @@
+
+# Terraform directories and plan files
+.terraform/
+*.tfplan
+
+# State files (if ever generated locally)
+terraform.tfstate
+terraform.tfstate.backup
+crash.log
+
+# Secrets and private keys
+*.pem
+*.key
+*.pub
+*.crt
+*.env
+
+# IDE/editor and OS-specific files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.log
+
+# Personal dev environment folders
+.atom/
+.android/
+.aws/
+
+# Python virtual environments (if scripts are added)
+.venv/
+__pycache__/
+*.pyc
+
+# ZIP archives and outputs
+*.zip
