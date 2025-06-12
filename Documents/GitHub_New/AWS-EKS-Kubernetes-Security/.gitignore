@@ -1,0 +1,26 @@
+# Terraform
+*.tfstate
+*.tfstate.backup
+.terraform/
+.crash/
+*.tfvars
+override.tf
+override.tf.json
+terraform.tfvars
+*.zip
+
+# Kubernetes manifests
+*.yaml
+*.yml
+
+# AWS credentials (if accidentally added)
+*.pem
+*.key
+*.crt
+
+# OS / editor files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
