@@ -17,6 +17,8 @@ jobs:
         with:
           working_directory: .
           additional_args: --minimum-severity HIGH --skip-download-external-modules --force-all-dirs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       # Checkov (BLOCKING) + SARIF to Code Scanning
       - name: Checkov
