@@ -1,21 +1,43 @@
 name: IaC Security Gates
 on: [pull_request]
+
 jobs:
   scan:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with: { python-version: '3.11' }
-      - name: Install tools
-        run: |
-          pip install checkov
-          curl -sL https://raw.githubusercontent.com/aquasecurity/tfsec/master/scripts/install_linux.sh | bash
-          curl -sL -o conftest.tar.gz https://github.com/open-policy-agent/conftest/releases/download/v0.54.0/conftest_Linux_x86_64.tar.gz
-          tar -xzf conftest.tar.gz && sudo mv conftest /usr/local/bin/
+
+      # tfsec via official action
       - name: tfsec
-        run: tfsec .
+        uses: aquasecurity/tfsec-action@v1
+        with:
+          args: --minimum-severity HIGH .
+
+      # Checkov via official action (also produces SARIF for Code scanning)
       - name: Checkov
-        run: checkov -d .
+        uses: bridgecrewio/checkov-action@master
+        with:
+          directory: .
+          framework: terraform
+          soft_fail: false
+          quiet: true
+          output_format: sarif
+          output_file_path: checkov.sarif
+
+      - name: Upload SARIF to GitHub
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: checkov.sarif
+
+      # Conftest: install latest release quickly, then run your policy
+      - name: Install Conftest
+        run: |
+          wget -q https://github.com/open-policy-agent/conftest/releases/latest/download/conftest_Linux_x86_64.tar.gz
+          tar xzf conftest_Linux_x86_64.tar.gz
+          sudo mv conftest /usr/local/bin/
+
       - name: Conftest (OPA policies)
         run: conftest test -p policy/ .
