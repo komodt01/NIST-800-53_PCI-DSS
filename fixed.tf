@@ -96,3 +96,9 @@ resource "aws_s3_bucket_logging" "fixed" {
   target_prefix = "s3-access-logs/"
 }
 
+# 4) Enable server access logging on the main bucket, writing into the logs bucket
+resource "aws_s3_bucket_logging" "fixed_logging" {
+  bucket        = aws_s3_bucket.fixed.id           # the bucket to log FROM
+  target_bucket = aws_s3_bucket.fixed_logs.id      # the bucket to log TO
+  target_prefix = "s3-access/"                      # optional prefix in the logs bucket
+}
