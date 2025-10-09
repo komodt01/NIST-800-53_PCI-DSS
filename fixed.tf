@@ -46,7 +46,34 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "fixed" {
   bucket = aws_s3_bucket.fixed.id
   rule {
     apply_server_side_encryption_by_default {
-      sse_algorithm = "AES256"
+      sse_algorithm     = "aws:kms"
+      kms_master_key_id = aws_kms_key.s3_default.arn
     }
   }
 }
+# KMS key for default encryption
+resource "aws_kms_key" "s3_default" {
+  description         = "CMK for S3 default encryption (demo)"
+  enable_key_rotation = true
+}
+
+# Logging target bucket (must be a different bucket name)
+resource "aws_s3_bucket" "fixed_logs" {
+  bucket = "demo-private-bucket-logs-12345"
+}
+
+# Enable access logging to the logs bucket
+resource "aws_s3_bucket_logging" "fixed" {
+  bucket        = aws_s3_bucket.fixed.id
+  target_bucket = aws_s3_bucket.fixed_logs.id
+  target_prefix = "logs/"
+}
+
+# Enable versioning
+resource "aws_s3_bucket_versioning" "fixed" {
+  bucket = aws_s3_bucket.fixed.id
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
+
