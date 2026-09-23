@@ -1,4 +1,4 @@
-# Multi-Cloud Compliance Lab – NIST SP 800-53 + PCI DSS
+# Multi-Cloud Security Compliance – NIST SP 800-53 + PCI DSS
 
 ## Overview
 
