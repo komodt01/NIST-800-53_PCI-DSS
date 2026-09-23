@@ -1,23 +1,59 @@
-# Business Case: NIST 800-53 + PCI-DSS Cloud Security Project
+# Business Case – Multi-Cloud Security Compliance Lab
 
-## Purpose  
-This project was designed to help organizations meet the rigorous security and compliance requirements defined by NIST 800-53 and PCI-DSS, especially when operating in a multi-cloud environment. It serves as a reusable security architecture and automation framework for teams responsible for safeguarding payment data and regulated workloads across AWS, Azure, and GCP.
+## Business Context
 
-## Business Problem  
-Enterprises that process, store, or transmit cardholder data face compliance obligations under PCI-DSS. Additionally, organizations with federal or highly regulated contracts must adhere to NIST 800-53 control baselines. Ensuring these controls are met in a scalable, auditable, and automated way across cloud providers is a challenge, particularly when teams lack integrated tooling or consistent configurations.
+Organizations operating workloads across multiple cloud providers must often satisfy security requirements originating from regulatory, contractual, and internal governance frameworks.
 
-## Solution  
-This project introduces a Terraform-driven security deployment model that implements technical safeguards such as encryption, access control, logging, and vulnerability detection — mapped directly to NIST and PCI-DSS control objectives. The solution supports continuous compliance posture, simplifies audits, and reduces the risk of misconfigurations or human error.
+For environments that process payment-card data, PCI DSS establishes security requirements for protecting account data and the systems that handle it. Organizations may also use NIST SP 800-53 as a source of security and privacy controls.
 
-## Value  
-- Enhances audit readiness across multiple regulatory frameworks  
-- Reduces the time and cost of quarterly PCI-DSS assessments  
-- Provides consistent cloud security baselines across providers  
-- Demonstrates architectural maturity and security automation skills  
-- Aligns security implementation with business-driven compliance requirements
+The challenge is translating those requirements into technical safeguards while maintaining consistent security outcomes across cloud platforms with different native services and implementation models.
 
-## Stakeholders  
-- Security Architects  
-- Compliance Teams  
-- DevOps and Infrastructure Teams  
-- Cloud Governance and Risk Officers
+## Security Challenge
+
+A security requirement may remain consistent even when its implementation differs between AWS, Azure, GCP, and the underlying operating system.
+
+Examples include:
+
+- Restricting network access
+- Protecting administrative access
+- Maintaining security logs
+- Detecting vulnerabilities
+- Monitoring system integrity
+- Protecting sensitive data
+
+Without a control-driven approach, multi-cloud environments can develop inconsistent configurations and gaps between compliance requirements and technical implementation.
+
+## Lab Approach
+
+This lab explores a simple architecture pattern:
+
+**Requirement → Security Objective → Technical Control → Implementation → Validation**
+
+Terraform examples provide infrastructure foundations across AWS, Azure, and GCP, while Linux configuration examples demonstrate host-level security controls.
+
+NIST SP 800-53 and PCI DSS are used as reference frameworks to connect technical safeguards with broader security requirements.
+
+## Architecture Principle
+
+**Standardize the security requirement and expected outcome, not necessarily the implementation.**
+
+Each cloud provider may use different services or configuration mechanisms to satisfy a similar security objective. Architecture and governance should define the required security outcome while allowing implementations appropriate to each platform.
+
+## Security Architecture Value
+
+This approach helps demonstrate how security architects can:
+
+- Translate compliance requirements into technical security objectives
+- Establish consistent control expectations across cloud platforms
+- Identify implementation differences between providers
+- Define evidence needed to validate controls
+- Separate compliance requirements from specific technologies
+- Support traceability from requirements to technical safeguards
+
+## Scope and Limitations
+
+This project is a hands-on learning lab and does not represent a complete NIST SP 800-53 or PCI DSS compliance program.
+
+Regulatory compliance requires additional organizational policies, procedures, governance, testing, evidence collection, risk management, and independent assessment where applicable.
+
+The configurations in this repository should therefore be treated as examples for security architecture and compliance-control exploration rather than production-ready compliance baselines.
