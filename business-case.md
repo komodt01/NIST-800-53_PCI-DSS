@@ -1,4 +1,4 @@
-# Business Case – Multi-Cloud Security Compliance Lab
+# Business Case – Multi-Cloud Security Compliance
 
 ## Business Context
 
